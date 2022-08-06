@@ -5,7 +5,7 @@
 
 			<v-spacer></v-spacer>
 
-			<v-btn depressed @click="updateNavigationPath('/add-tasks')">
+			<v-btn depressed @click="updateNavigationPath('/add-task')">
 				Add New Task
             </v-btn>
 
