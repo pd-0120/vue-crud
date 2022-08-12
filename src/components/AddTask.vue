@@ -45,6 +45,12 @@
 		</v-card-title>
 		<v-card-text> </v-card-text>
 	</v-card>
+	<v-snackbar
+		v-model="snackbar"
+		:timeout="1000"
+	>
+		{{ text }}
+	</v-snackbar>
 </template>
 <script>
 	import axios from "axios";
@@ -55,6 +61,8 @@
 			valid: true,
 			title: null,
 			description: null,
+			snackbar:false,
+			text:null,
 			status: null,
 			items: ["Pending", "Completed", "In Progress"],
 			titleRules: [
@@ -81,11 +89,17 @@
 				form.append("description", this.description);
 				form.append("status", this.status);
 
-				await axios.post("http://localhost:3001/tasks", {
+				const task = await axios.post("http://localhost:3001/tasks", {
 					title: this.title,
 					description: this.description,
 					status: this.status,
 				});
+
+				if(task) {
+					this.snackbar = true;
+					this.text = "Task created successfully."
+					this.$refs.add_task_form.reset()
+				}
 			},
 		},
 	};

@@ -20,7 +20,24 @@
 								<td>{{ task.name }}</td>
 								<td>{{ task.description }}</td>
 								<td>{{ task.status }}</td>
-								<td> <v-btn depressed color="primary">Primary</v-btn></td>
+								<td>
+									<v-btn depressed color="success">
+										<v-icon
+											large
+											color="darken-2"
+											>
+											mdi-pencil
+											</v-icon>
+									</v-btn>
+									<v-btn depressed color="error ml-2">
+										<v-icon
+											large
+											color="darken-2"
+											>
+											mdi-delete
+											</v-icon>
+									</v-btn>
+								</td>
 							</tr>
 						</tbody>
 					</v-table>
