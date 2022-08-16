@@ -3,7 +3,7 @@
 		<v-card-title>
 			<v-row>
 				<v-col md="12" class="text-center">Tasks List</v-col>
-				<v-col md="6" class="text-center" justify-center>
+				<v-col md="12" class="text-center" justify-center>
 					<v-table>
 						<thead>
 							<tr>
@@ -29,7 +29,7 @@
 											mdi-pencil
 											</v-icon>
 									</v-btn>
-									<v-btn depressed color="error ml-2">
+									<v-btn depressed color="error ml-2" @click="deleteTask(task.id)">
 										<v-icon
 											large
 											color="darken-2"
@@ -62,6 +62,10 @@
 				const data = await axios.get("http://localhost:3001/tasks");
 				this.tasks = data.data;
 			},
+			async deleteTask(id) {
+				const data = await axios.delete(`http://localhost:3001/tasks/${id}`);
+				this.getTasks()
+			}
 		},
 	};
 </script>
