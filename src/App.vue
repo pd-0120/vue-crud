@@ -11,7 +11,6 @@
 </template>
 
 <script>
-	import HelloWorld from "./components/HelloWorld.vue";
 	import Header from "./components/Shared/Header.vue";
 	import Footer from "./components/Shared/Footer.vue";
 
@@ -19,7 +18,6 @@
 		name: "App",
 
 		components: {
-			HelloWorld,
 			Header,
 			Footer,
 		},

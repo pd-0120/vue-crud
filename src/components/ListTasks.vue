@@ -21,7 +21,7 @@
 								<td>{{ task.description }}</td>
 								<td>{{ task.status }}</td>
 								<td>
-									<v-btn depressed color="success">
+									<v-btn depressed color="success" @click="this.$router.push(`edit-task/${task.id}`)">
 										<v-icon
 											large
 											color="darken-2"
