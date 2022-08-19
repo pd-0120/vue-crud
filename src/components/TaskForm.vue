@@ -35,7 +35,7 @@
 	</v-form>
     <v-snackbar
 		v-model="snackbar"
-		:timeout="1000"
+		:timeout="5000"
 	>
 		{{ text }}
 	</v-snackbar>
@@ -89,24 +89,27 @@ export default {
     },
     methods: {
         async submitForm() {
-            this.$refs.add_task_form.validate();
-            const form = new FormData();
-            form.append("title", this.title);
-            form.append("description", this.description);
-            form.append("status", this.status);
-            const data = {title: this.title,description: this.description,status: this.status}
-            let task = null;
-            
-            if(this.isEdit) {
-                task = await axios.put(`http://localhost:3001/tasks/${this.id}`, data);
-            } else {
-                task = await axios.post(`http://localhost:3001/tasks`, data);
-            }
-
-            if(task) {
-                this.snackbar = true;
-                this.text = "Task Updated successfully."
-                this.$refs.add_task_form.reset()
+            this.valid = await this.$refs.add_task_form.validate();
+            if(this.valid.valid) {
+                const form = new FormData();
+                form.append("title", this.title);
+                form.append("description", this.description);
+                form.append("status", this.status);
+                const data = {title: this.title,description: this.description,status: this.status}
+                let task = null;
+                
+                if(this.isEdit) {
+                    task = await axios.put(`http://localhost:3001/tasks/${this.id}`, data);
+                } else {
+                    task = await axios.post(`http://localhost:3001/tasks`, data);
+                }
+    
+                if(task) {
+                    this.snackbar = true;
+                    this.text = "Task Updated successfully."
+                    this.$refs.add_task_form.reset()
+                }
+                this.$router.push({name:'ListTasks'})
             }
         },
     },

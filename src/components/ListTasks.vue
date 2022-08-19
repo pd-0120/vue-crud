@@ -7,20 +7,20 @@
 					<v-table>
 						<thead>
 							<tr>
-								<th>ID</th>
-								<th>Name</th>
-								<th>Description</th>
-								<th>Status</th>
-								<th>Action</th>
+								<th width="20%" align="left">ID</th>
+								<th width="20%" align="left">Title</th>
+								<th width="20%" align="left">Description</th>
+								<th width="20%" align="left">Status</th>
+								<th width="20%" align="left">Action</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr v-for="task in tasks" :key="task.id">
-								<td>{{ task.id }}</td>
-								<td>{{ task.name }}</td>
-								<td>{{ task.description }}</td>
-								<td>{{ task.status }}</td>
-								<td>
+								<td width="20%" align="left">{{ task.id }}</td>
+								<td width="20%" align="left">{{ task.title }}</td>
+								<td width="20%" align="left">{{ task.description }}</td>
+								<td width="20%" align="left">{{ task.status }}</td>
+								<td width="20%" align="left">
 									<v-btn depressed color="success" @click="this.$router.push(`edit-task/${task.id}`)">
 										<v-icon
 											large
