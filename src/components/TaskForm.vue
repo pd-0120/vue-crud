@@ -56,7 +56,7 @@ export default {
         text:null,
         status: null,
         isEdit: false,
-        items: ["Pending", "Completed", "In Progress"],
+        items: ["Pending", "Completed", "In-Progress"],
         titleRules: [
             (v) => !!v || "Task title is required",
             (v) =>
@@ -75,17 +75,16 @@ export default {
     }),
     async mounted() {
         const id = this.$route.params.id
-        if(id) {
-            let task = await axios.get(`${this.endpoint}tasks/${id}`);
-            if(task && this.$route.name === "EditTask") {
-                task = task.data
+        if(id && this.$route.name === "EditTask") {
+            let response = await axios.get(`${this.endpoint}tasks/${id}`);
+            
+            const post = response.data.post
 
-                this.title = task.name;
-                this.description = task.description;
-                this.status = task.status;
-                this.id = task.id
-                this.isEdit = true;
-            }
+            this.title = post.name;
+            this.description = post.description;
+            this.status = post.status;
+            this.id = post.id
+            this.isEdit = true;
         }
     },
     methods: {
@@ -96,7 +95,7 @@ export default {
                 let task = null;
                 
                 if(this.isEdit) {
-                    task = await axios.put(`${this.endpoint}tasks/${this.id}`, data);
+                    task = await axios.put(`${this.endpoint}tasks/${this.id}/update`, data);
                 } else {
                     task = await axios.post(`${this.endpoint}tasks/create   `, data);
                 }
