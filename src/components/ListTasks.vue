@@ -17,7 +17,7 @@
 						<tbody>
 							<tr v-for="task in tasks" :key="task.id">
 								<td width="20%" align="left">{{ task.id }}</td>
-								<td width="20%" align="left">{{ task.title }}</td>
+								<td width="20%" align="left">{{ task.name }}</td>
 								<td width="20%" align="left">{{ task.description }}</td>
 								<td width="20%" align="left">{{ task.status }}</td>
 								<td width="20%" align="left">
@@ -53,17 +53,19 @@
 		name: "ListTasks",
 		data: () => ({
 			tasks: [],
+			endpoint: import.meta.env.VITE_API_ENDPOINT
 		}),
 		mounted() {
 			this.getTasks();
 		},
 		methods: {
+			
 			async getTasks() {
-				const data = await axios.get("http://localhost:3001/tasks");
-				this.tasks = data.data;
+				const response = await axios.get(`${this.endpoint}tasks`);
+				this.tasks = response.data;
 			},
 			async deleteTask(id) {
-				const data = await axios.delete(`http://localhost:3001/tasks/${id}`);
+				const data = await axios.delete(`${this.endpoint}tasks/${id}/delete`);
 				this.getTasks()
 			}
 		},

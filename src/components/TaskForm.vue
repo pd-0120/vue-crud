@@ -47,6 +47,7 @@ export default {
     name: "TaskForm",
 
     data: () => ({
+        endpoint: import.meta.env.VITE_API_ENDPOINT,
         valid: true,
         title: null,
         description: null,
@@ -75,11 +76,11 @@ export default {
     async mounted() {
         const id = this.$route.params.id
         if(id) {
-            let task = await axios.get(`http://localhost:3001/tasks/${id}`);
+            let task = await axios.get(`${this.endpoint}tasks/${id}`);
             if(task && this.$route.name === "EditTask") {
                 task = task.data
 
-                this.title = task.title;
+                this.title = task.name;
                 this.description = task.description;
                 this.status = task.status;
                 this.id = task.id
@@ -91,25 +92,21 @@ export default {
         async submitForm() {
             this.valid = await this.$refs.add_task_form.validate();
             if(this.valid.valid) {
-                const form = new FormData();
-                form.append("title", this.title);
-                form.append("description", this.description);
-                form.append("status", this.status);
-                const data = {title: this.title,description: this.description,status: this.status}
+                const data = {name: this.title,description: this.description,status: this.status}
                 let task = null;
                 
                 if(this.isEdit) {
-                    task = await axios.put(`http://localhost:3001/tasks/${this.id}`, data);
+                    task = await axios.put(`${this.endpoint}tasks/${this.id}`, data);
                 } else {
-                    task = await axios.post(`http://localhost:3001/tasks`, data);
+                    task = await axios.post(`${this.endpoint}tasks/create   `, data);
                 }
     
                 if(task) {
                     this.snackbar = true;
                     this.text = "Task Updated successfully."
                     this.$refs.add_task_form.reset()
+                    this.$router.push({name:'ListTasks'})
                 }
-                this.$router.push({name:'ListTasks'})
             }
         },
     },
